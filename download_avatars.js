@@ -3,7 +3,7 @@ var request = require('request');
 console.log('Github Avatar Downloader App');
 
 var GITHUB_USER = "vixdug";
-var GITHUB_TOKEN = "12ed0f76821ee1171ee6e389a6cf6c506f1ddccc"
+var GITHUB_TOKEN = "****************"
 
 
 function getRepoContributors(repoOwner, repoName, cb) {
