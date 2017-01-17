@@ -1,6 +1,11 @@
 var request = require('request');
 var fs = require('fs');
 
+
+repoOwner = process.argv[2]
+repoName = process.argv[3]
+
+
 console.log('Github Avatar Downloader App');
 
 var GITHUB_USER = "vixdug";
@@ -8,7 +13,6 @@ var GITHUB_TOKEN = "1f9205487148b285508f6bc7f6e5aa2642dd4ef9"
 
 
 function getRepoContributors(repoOwner, repoName, cb) {
-
  var requestURL = 'https://'+ GITHUB_USER + ':' + GITHUB_TOKEN +  '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors';
 
  var requestOptions = {
@@ -24,30 +28,37 @@ function getRepoContributors(repoOwner, repoName, cb) {
        parsed.forEach(function(value, index){
          var login = value.login;
          var url = value.avatar_url;
-         console.log("This is the login:", login);
-         console.log("This is the avatar_url:", url);
+        //  console.log("This is the login:", login);
+        //  console.log("This is the avatar_url:", url);
+         downloadImageByURL(url, login)
        });
      }
    });
 }
 
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(repoOwner, repoName, function(err, result) {
   // console.log("Errors:", err);
   // console.log("Result:", result);
+
 })
 
-//         .on('error', function (err) {
-//           throw err;
-//           error = err;
-//
-//         })
-//         .on('response', function (response) {
-//
-//         })
-//         .on('end', function () {
-//         cb(error, result);
-//         console.log('the end of request');
-//           })
-//
-//         .pipe(fs.createWriteStream('./contributors'));
+
+var mkdirSync = function () {
+  try {
+    fs.mkdirSync("avatars");
+  } catch(e) {
+    if (e.code != 'EEXIST') throw e;
+  }
+}();
+
+function downloadImageByURL(url, filePath) {
+  request.get(url)
+         .on('error', function (err) {
+           throw err;
+         })
+         .on('response', function (response) {
+           console.log('Response Status Code: ', response.statusCode);
+         })
+         .pipe(fs.createWriteStream('./avatars/'+filePath+'.jpg'));
+}
