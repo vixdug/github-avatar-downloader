@@ -2,10 +2,12 @@ require('dotenv').config()
 var request = require('request');
 var fs = require('fs');
 
-
+if (process.argv.length <= 2) {
+  console.log("you need repo and username");
+} else {
 repoOwner = process.argv[2]
 repoName = process.argv[3]
-
+}
 
 console.log('Github Avatar Downloader App');
 
