@@ -10,7 +10,7 @@ console.log('Github Avatar Downloader App');
 
 var GITHUB_USER = "vixdug";
 
-var GITHUB_TOKEN = "1f9205487148b285508f6bc7f6e5aa2642dd4ef9"
+var GITHUB_TOKEN = "**filtered out sensitive information**"
 
 
 function getRepoContributors(repoOwner, repoName, cb) {
